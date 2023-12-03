@@ -1,21 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
-import Child from './components/Child';
-import Child2 from './components/Child2';
-import { useState } from 'react';
 
+import './App.css';
+import { useEffect, useState } from 'react';
+
+// useEffet are sideEffects render when all component things run 
+// side effects are for state handle and a function tosetthe state 
 function App() {
-let obj = {
-  title:"Title1",
-  city:"New"
-}
-function parentTest(obj){
-  console.log("I am inside app.js");
-  console.log(obj);
-}
+ const[text, setText] = useState("");
+
+//  1-type => render on every changes
+//  useEffect(() => {
+//   console.log("UI rendering ho chuka hai");
+//  })
+
+// 2-type => render only one times 
+// [] dependencies list are defined in this and called denpendency
+// useEffect(() => {
+//   console.log("UI rendering done");
+// }, []);
+
+// 3-Type => render first and when dependency list changes 
+// useEffect(() => {
+//    console.log("UI rendering done");
+// }, [text]);
+
+
+// 4-type => first run the return statement and then simple  
+useEffect(()=> {
+ console.log("This is simple rendering");
+ return () => {
+  console.log("This is return rendering");
+ }
+});
+
+ function changeHandler(e)
+ {
+  setText(e.target.value)
+  console.log(text);
+ }
   return (
-    <div className="text-3xl font-bold underline bg-red-200">
-        <Child onCall = {parentTest}/>
+    <div className="">
+       <input type='text' placeholder='Enter Your text' onChange={changeHandler}/>
     </div>
   );
 }
