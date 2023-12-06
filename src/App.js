@@ -1,45 +1,42 @@
 
 import './App.css';
 import { useEffect, useState } from 'react';
-
-// useEffet are sideEffects render when all component things run 
-// side effects are for state handle and a function tosetthe state 
+//learn the concept of formData and fetch all the formdata
+// in this we will handle multiple input elemet to store the form data
 function App() {
- const[text, setText] = useState("");
+  const [formData, setFormData] = useState({firstName:"", lastName:""});
+  console.log("form data is", formData);
 
-//  1-type => render on every changes
-//  useEffect(() => {
-//   console.log("UI rendering ho chuka hai");
-//  })
-
-// 2-type => render only one times 
-// [] dependencies list are defined in this and called denpendency
-// useEffect(() => {
-//   console.log("UI rendering done");
-// }, []);
-
-// 3-Type => render first and when dependency list changes 
-// useEffect(() => {
-//    console.log("UI rendering done");
-// }, [text]);
-
-
-// 4-type => first run the return statement and then simple  
-useEffect(()=> {
- console.log("This is simple rendering");
- return () => {
-  console.log("This is return rendering");
- }
-});
-
- function changeHandler(e)
- {
-  setText(e.target.value)
-  console.log(text);
- }
+  // to maintain this we use a special syntax 
+  // first we copy old state and then set fucntion called and ui re-render 
+  const changeHandler = (event)=> {
+  //  setFormData(event.target.value); 
+  setFormData((prevFormData) => {
+   return{
+    ...prevFormData,
+    [event.target.name] : event.target.value
+   }
+  });
+  }
   return (
-    <div className="">
-       <input type='text' placeholder='Enter Your text' onChange={changeHandler}/>
+    <div className="App flex flex-col justify-center">
+      <form>
+          {/* to handle multiple input we use name attribute and creat a state object */}
+          <input type='text' 
+          placeholder='Enter Your first name'
+          onChange={changeHandler}
+          name='firstName'
+          />
+
+          <input type='text' 
+          placeholder='Enter Your last name'
+          onChange={changeHandler}
+          name='lastName'
+          />
+          <textarea placeholder='Enter Your Text' >
+
+          </textarea>
+      </form>
     </div>
   );
 }
