@@ -1,76 +1,70 @@
 
+import { Link, NavLink, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { useEffect, useState } from 'react';
-//learn the concept of formData and fetch all the formdata
-// in this we will handle multiple input elemet to store the form data
-function App() {
-  const [formData, setFormData] = useState({firstName:"", lastName:"", textArea:"", isVisible:true, mode:""});
-  console.log("form data is", formData);
+import Home from './components/Home';
+import About from './components/About';
+import Catalogue from './components/Catalogue';
+import Contact from './components/Contact';
+import Notfound from './components/Notfound';
+import Mainheader from './components/Mainheader';
 
-  // to maintain this we use a special syntax 
-  // first we copy old state and then set fucntion called and ui re-render 
-  const changeHandler = (event)=> {
-  const {value, type, checked, name} = event.target;
-  setFormData((prevFormData) => {
-   return{
-    ...prevFormData,
-    [name] : type === "checkbox" ? checked : value
-   }
-  });
-  }
+function App() {
   return (
     <div className="">
-      <form>
-          {/* to handle multiple input we use name attribute and creat a state object */}
-          {/* to keep state of single element we use value attribute  */}
-          <input type='text' 
-          placeholder='Enter Your first name'
-          onChange={changeHandler}
-          name='firstName'
-          value={formData.firstName}
-          />
+      {/* Link and NavLink are differnt navlink add active class in the element  */}
+      <nav>
+        <ul>
+          <li>
+            <NavLink to={'/'}>Home</NavLink>
+          </li>
+          <li>
+            <NavLink to={'/about'}>About</NavLink>
+          </li>
+          <li>
+            <NavLink to={'/catalogue'}>Catalogue</NavLink>
+          </li>
+          <li>
+            <NavLink to={'/contact'}>Contact</NavLink>
+          </li>
+        </ul>
+      </nav>
 
-          <input type='text' 
-          placeholder='Enter Your last name'
-          onChange={changeHandler}
-          name='lastName'
-          value={formData.lastName}
-          />
-          <textarea placeholder='Enter Your Text'
-          onChange={changeHandler}
-          name='textArea'
-          value={formData.textArea}
-          >
-          </textarea>
-          <input
-          type='checkbox'
-          onChange={changeHandler}
-          name='isVisible'
-          id='isVisible'
-          checked= {formData.isVisible}
-          />
-          <label htmlFor='isVisible'>Am i visible</label>
-          <br/>
-          <br/>
+      {/* <nav>
+        <ul>
+          <li>
+            <Link to={'/'}>Home</Link>
+          </li>
+          <li>
+            <Link to={'/about'}>About</Link>
+          </li>
+          <li>
+            <Link to={'/catalogue'}>Catalogue</Link>
+          </li>
+          <li>
+            <Link to={'/contact'}>Contact</Link>
+          </li>
+        </ul>
+      </nav> */}
+      
+      {/* creating a default route parent and child relation  */}
+      <Routes>
+        <Route path='/' element = {<Mainheader/>}>
+          <Route index element = {<Home/>} />
+          <Route path='/about' element = {<About/>} />
+          <Route path='/catalogue' element = {<Catalogue/>} />
+          <Route path='/contact' element = {<Contact/>} />
+          <Route path='*' element = {<Notfound/>} />
+        </Route>
+       </Routes>
 
-          <input
-          type='radio'
-          onChange={changeHandler}
-          name='mode'
-          id='mode'
-          value="Online Mode"
-          checked= {formData.mode === "Online Mode"}
-          />
-          
-          <input
-          type='radio'
-          onChange={changeHandler}
-          name='mode'
-          id='mode'
-          value="Off-Line"
-          checked = {formData.mode === "Off-Line"}
-          />
-      </form>
+      {/* this is a simple way of defining route  */}
+       {/* <Routes>
+          <Route path='/' element = {<div>This is home</div>} />
+          <Route path='/about' element = {<div>This is about</div>} />
+          <Route path='/catalogue' element = {<div>This is catalogue</div>} />
+          <Route path='/contact' element = {<div>This is contact</div>} />
+       </Routes> */}
     </div>
   );
 }
