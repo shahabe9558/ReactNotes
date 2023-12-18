@@ -1,7 +1,6 @@
 
 import { Link, NavLink, Route, Routes } from 'react-router-dom';
 import './App.css';
-import { useEffect, useState } from 'react';
 import Home from './components/Home';
 import About from './components/About';
 import Catalogue from './components/Catalogue';
